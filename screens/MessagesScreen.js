@@ -1,14 +1,15 @@
 // screens/MessagesScreen.js
-import React, { useEffect, useState } from "react";
-import { View, Text, FlatList } from "react-native";
-import ChatApi from "../components/ChatApi";
+import React, { useEffect, useState } from 'react';
+import { FlatList } from 'react-native';
+import { Container, Content, Text, List, ListItem } from 'native-base';
+import ChatApi from '../components/ChatApi';
 
 const MessagesScreen = () => {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     // Fetch messages from the backend
-    ChatApi.get("messages/")
+    ChatApi.get('messages/')
       .then((response) => {
         setMessages(response.data);
       })
@@ -18,20 +19,26 @@ const MessagesScreen = () => {
   }, []);
 
   return (
-    <View>
-      <Text>Messages List</Text>
-      <FlatList
-        data={messages}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <View>
-            <Text>From: {item.sender.username}</Text>
-            <Text>To: {item.receiver.username}</Text>
-            <Text>Content: {item.content}</Text>
-          </View>
-        )}
-      />
-    </View>
+    <Container>
+      <Content>
+        <Text style={{ fontWeight: 'bold', fontSize: 24, marginVertical: 16 }}>
+          Messages List
+        </Text>
+        <List>
+          <FlatList
+            data={messages}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <ListItem>
+                <Text>From: {item.sender.username}</Text>
+                <Text>To: {item.receiver.username}</Text>
+                <Text>Content: {item.content}</Text>
+              </ListItem>
+            )}
+          />
+        </List>
+      </Content>
+    </Container>
   );
 };
 
