@@ -1,7 +1,7 @@
 // screens/MessagesScreen.js
 import React, { useEffect, useState } from 'react';
-import { FlatList } from 'react-native';
-import { Container, Content, Text, List, ListItem } from 'native-base';
+import { View, Text, FlatList } from 'react-native';
+import { Box, Heading, VStack } from 'native-base';
 import ChatApi from '../components/ChatApi';
 
 const MessagesScreen = () => {
@@ -19,26 +19,22 @@ const MessagesScreen = () => {
   }, []);
 
   return (
-    <Container>
-      <Content>
-        <Text style={{ fontWeight: 'bold', fontSize: 24, marginVertical: 16 }}>
-          Messages List
-        </Text>
-        <List>
-          <FlatList
-            data={messages}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => (
-              <ListItem>
-                <Text>From: {item.sender.username}</Text>
-                <Text>To: {item.receiver.username}</Text>
-                <Text>Content: {item.content}</Text>
-              </ListItem>
-            )}
-          />
-        </List>
-      </Content>
-    </Container>
+    <Box flex={1} p={4}>
+      <Heading size="lg" mb={4} fontWeight="bold">
+        Messages List
+      </Heading>
+      <FlatList
+        data={messages}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <VStack mb={4}>
+            <Text fontSize="lg">From: {item.sender.username}</Text>
+            <Text fontSize="lg">To: {item.receiver.username}</Text>
+            <Text fontSize="lg">Content: {item.content}</Text>
+          </VStack>
+        )}
+      />
+    </Box>
   );
 };
 
